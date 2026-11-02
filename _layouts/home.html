@@ -1,0 +1,24 @@
+---
+layout: default
+---
+<h1 class="eyebrow">POSTS</h1>
+<div class="post-list">
+  {% if paginator %}{% assign posts = paginator.posts %}{% else %}{% assign posts = site.posts %}{% endif %}
+  {% for post in posts %}
+  <article class="post-summary">
+    <time class="post-date" datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: '%B %-d, %Y' }}</time>
+    <h2><a href="{{ post.url | relative_url }}">{{ post.title | escape }} <span aria-hidden="true">↗</span></a></h2>
+    <p>{{ post.description | default: post.excerpt | strip_html | escape }}</p>
+    <div class="tag-list" aria-label="Tags">
+      {% for tag in post.tags %}<a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag | escape }}</a>{% endfor %}
+    </div>
+  </article>
+  {% endfor %}
+</div>
+{% if paginator.total_pages > 1 %}
+<nav class="pagination" aria-label="Post pages">
+  {% if paginator.previous_page %}<a href="{{ paginator.previous_page_path | relative_url }}">← Newer posts</a>{% endif %}
+  <span>Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+  {% if paginator.next_page %}<a href="{{ paginator.next_page_path | relative_url }}">Older posts →</a>{% endif %}
+</nav>
+{% endif %}

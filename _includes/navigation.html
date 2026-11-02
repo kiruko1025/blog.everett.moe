@@ -1,12 +1,14 @@
-<nav class="nav">
-  <div class="nav-container">
-    <a href="{{ site.baseurl }}/">
-      <h2 class="nav-title">{{ site.title }}</h2>
-    </a>
-    <ul>
-      <li><a href="{{ site.baseurl }}/">Posts</a></li>
-      <li><a href="{{ '/tags' | prepend: site.baseurl }}">Tags</a></li>
-      <li><a href="https://everett.moe">About</a></li>
-    </ul>
+<aside class="sidebar" id="site-sidebar" data-sidebar>
+  <div class="sidebar-heading">
+    <a class="wordmark" href="{{ '/' | relative_url }}" aria-label="Everett’s blog, home">everett<span aria-hidden="true">.</span></a>
+    <button class="menu-close" type="button" aria-label="Close navigation" data-menu-close>×</button>
   </div>
-</nav>
+  <span class="sidebar-label">BLOG</span>
+  <nav aria-label="Main navigation">
+    <a href="{{ '/' | relative_url }}"{% unless page.url == '/tags/' %} aria-current="page"{% endunless %}>Posts</a>
+    <a href="{{ '/tags/' | relative_url }}"{% if page.url == '/tags/' %} aria-current="page"{% endif %}>Tags</a>
+    <a href="https://everett.moe">About</a>
+    <a href="mailto:me@everett.moe">Contact</a>
+  </nav>
+  <a class="sidebar-feed" href="{{ '/feed.xml' | relative_url }}">RSS feed <span aria-hidden="true">↗</span></a>
+</aside>

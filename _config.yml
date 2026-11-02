@@ -1,19 +1,20 @@
-title: Everett Xu
+title: Everett’s blog
 description: Notes on computer science, mathematics, software, books, and design.
-url: https://everett.boo
+url: https://blog.everett.moe
 baseurl: ""
 
 author:
   name: Everett Xu
   url: https://everett.moe
 
-# Register this shortname at https://disqus.com/admin/create/
+# Preserve the existing Disqus discussion identifiers.
 disqus: everett-boo
 
-remote_theme: chesterhow/tale
 markdown: kramdown
 permalink: /:year-:month-:day/:title
 paginate: 5
+paginate_path: /page/:num/
+timezone: America/New_York
 
 sass:
   quiet_deps: true
@@ -23,7 +24,6 @@ sass:
 plugins:
   - jekyll-feed
   - jekyll-paginate
-  - jekyll-remote-theme
   - jekyll-seo-tag
 
 include:

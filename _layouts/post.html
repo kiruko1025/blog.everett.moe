@@ -1,74 +1,47 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="{{ page.description | default: page.excerpt | strip_html }}">
-  <meta name="theme-color" content="#2e3440">
-  <title>{{ page.title }} | {{ site.title }}</title>
-  <link rel="stylesheet" href="/assets/castel.css">
-</head>
-<body>
-  <main class="page-main">
-    <div class="article-meta">
-      <a href="/">← All articles</a>
-      <span>{{ page.date | date: "%b" }} <b>{{ page.date | date: "%-d" }}</b>, <b>{{ page.date | date: "%Y" }}</b> • <b>{{ page.reading_time }}</b> Min Read</span>
+---
+layout: default
+---
+<article class="post">
+  <a class="back-link" href="{{ '/' | relative_url }}">← Posts</a>
+  <header class="post-header">
+    <div class="post-meta"><time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: '%B %-d, %Y' }}</time>{% if page.reading_time %}<span>{{ page.reading_time }} min read</span>{% endif %}</div>
+    <h1>{{ page.title | escape }}</h1>
+    <p class="byline">By {{ page.author | default: site.author.name | escape }}</p>
+    <div class="tag-list" aria-label="Tags">
+      {% for tag in page.tags %}<a href="{{ '/tags/' | relative_url }}#{{ tag | slugify }}">{{ tag | escape }}</a>{% endfor %}
     </div>
-
-    <h1 class="article-title">{{ page.title }}</h1>
-
-    <article class="article-content">
-      {% if page.description %}<p><em>{{ page.description }}</em></p>{% endif %}
-
-      {% if page.toc %}
-      <nav class="toc" aria-label="Table of contents">
-        <ul>
-          {% for item in page.toc %}
-          <li><a href="#{{ item.id }}">{{ item.title }}</a></li>
-          {% endfor %}
-        </ul>
-      </nav>
-      {% endif %}
-
-      {{ content }}
-
-      <nav class="article-nav" aria-label="More articles">
-        <ul>
-          {% if page.next %}
-          <li class="prev"><a href="{{ page.next.url }}">← {{ page.next.title }}</a></li>
-          {% endif %}
-          {% if page.previous %}
-          <li class="next"><a href="{{ page.previous.url }}">{{ page.previous.title }} →</a></li>
-          {% endif %}
-        </ul>
-      </nav>
-
-      <div class="article-bio">
-        <div>Written by <a href="https://everett.moe"><strong>Everett Xu</strong></a>, a student interested in computer science, mathematics, software development, books, and design.</div>
-      </div>
-
-      {% if site.disqus %}
-      <section class="comments" aria-label="Comments">
-        <div id="disqus_thread"></div>
-        <script>
-          var disqus_config = function () {
-            this.page.url = '{{ site.url }}{{ page.url }}';
-            this.page.identifier = '{{ page.url }}';
-            this.page.title = {{ page.title | jsonify }};
-          };
-          (function () {
-            var d = document;
-            var s = d.createElement('script');
-            s.src = 'https://{{ site.disqus }}.disqus.com/embed.js';
-            s.setAttribute('data-timestamp', +new Date());
-            (d.head || d.body).appendChild(s);
-          })();
-        </script>
-        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
-      </section>
-      {% endif %}
-    </article>
-  </main>
-  <footer>© {{ "now" | date: "%Y" }} All rights reserved.</footer>
-</body>
-</html>
+  </header>
+  {% if page.toc %}
+  <nav class="toc" aria-label="On this page">
+    <span class="eyebrow">ON THIS PAGE</span>
+    <ul>{% for item in page.toc %}<li><a href="#{{ item.id }}">{{ item.title | escape }}</a></li>{% endfor %}</ul>
+  </nav>
+  {% endif %}
+  <div class="article-content">{{ content }}</div>
+  {% if page.next or page.previous %}
+  <nav class="article-nav" aria-label="More posts">
+    {% if page.next %}<a href="{{ page.next.url | relative_url }}"><span class="article-nav-label">NEWER POST</span>{{ page.next.title | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
+    {% if page.previous %}<a href="{{ page.previous.url | relative_url }}"><span class="article-nav-label">OLDER POST</span>{{ page.previous.title | escape }} <span aria-hidden="true">↗</span></a>{% endif %}
+  </nav>
+  {% endif %}
+  {% if site.disqus %}
+  <section class="comments" aria-label="Comments">
+    <div id="disqus_thread"></div>
+    <script>
+      var disqus_config = function () {
+        this.page.url = {{ page.url | absolute_url | jsonify }};
+        this.page.identifier = {{ page.url | jsonify }};
+        this.page.title = {{ page.title | jsonify }};
+      };
+      (function () {
+        var d = document;
+        var s = d.createElement('script');
+        s.src = 'https://{{ site.disqus }}.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+  </section>
+  {% endif %}
+</article>
