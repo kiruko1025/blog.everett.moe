@@ -1,6 +1,6 @@
 # blog.everett.moe
 
-Everett’s blog, built with Jekyll and local layouts that match [everett.moe](https://everett.moe). The blog lives in this `blog` folder and remains an independent GitHub Pages repository.
+Everett’s blog, built with Jekyll and Catppuccin Macchiato layouts that match [everett.moe](https://everett.moe). The blog lives in this `blog` folder and remains an independent GitHub Pages repository.
 
 ## Preview locally
 
